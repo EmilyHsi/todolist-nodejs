@@ -48,7 +48,7 @@ const requestListener = (req, res) => {
     });
   } else if (req.url == '/todos' && req.method == 'DELETE') {
     todos.length = 0;
-    res.writeHead(404, headers);
+    res.writeHead(200, headers);
     res.write(JSON.stringify({
       "status": "success",
       "data": todos,
