@@ -29,7 +29,7 @@ const requestListener = (req, res) => {
         const title = JSON.parse(body).title;
         if (title !== undefined) {
           const todo = {
-            "title": title,
+            title,
             "id": uuidv4()
           };
           todos.push(todo);
@@ -72,11 +72,11 @@ const requestListener = (req, res) => {
   } else if (req.url.startsWith('/todos/') && req.method == 'PATCH') {
     req.on('end', () => {
       try {
-        const todo = JSON.parse(body).title;
+        const todoTitle = JSON.parse(body).title;
         const id = req.url.split('/').pop();
         const index = todos.findIndex(element => element.id == id);
-        if (todo !== undefined && index !== -1) {
-          todos[index].title = todo;
+        if (todoTitle !== undefined && index !== -1) {
+          todos[index].title = todoTitle;
           res.writeHead(200, headers);
           res.write(JSON.stringify({
             "status": "success",
@@ -86,7 +86,7 @@ const requestListener = (req, res) => {
         } else {
           errorHandle(res);
         }
-      } catch {
+      } catch(error) {
         errorHandle(res);
       }
     });
